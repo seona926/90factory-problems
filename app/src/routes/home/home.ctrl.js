@@ -17,18 +17,18 @@ const output = {
 };
 
 const process = {
-  login: (req, res) => {
+  login: async (req, res) => {
     // user는 사용자가 입력한 정보를 갖고있는 인스턴스
     const user = new User(req.body);
 
     // 사용자 정보를 갖고 login 메서드를 수행
-    const response = user.login();
+    const response = await user.login();
     return res.json(response);
   },
 
-  register: (req, res) => {
+  register: async (req, res) => {
     const user = new User(req.body);
-    const response = user.register();
+    const response = await user.register();
     return res.json(response);
   }
 };

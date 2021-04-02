@@ -7,9 +7,9 @@ class User {
     this.body = body;
   }
 
-  login() {
+  async login() {
     const client = this.body;
-    const { id, psword } = UserStorage.getUserInfo(client.id);
+    const { id, psword } = await UserStorage.getUserInfo(client.id);
 
     // UserStorage에 id가 있으면,
     // UserStorage의 정보와 사용자가 입력한 정보와 같은지 확인
@@ -22,10 +22,15 @@ class User {
     return { success: false, msg: "존재하지 않는 아이디입니다." };
   }  
 
-  register() {
+  async register() {
     const client = this.body;
-    const response = UserStorage.save(client);
-    return response;
+    try {
+      const response = await UserStorage.save(client);
+      return response;
+    } catch (err) {
+      return { success: false, msg: err };
+    };
+
   }
 }
 
